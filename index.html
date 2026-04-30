@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitalQueens – Energie & Vitalität für Frauen</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest:       #1A6B6B;
+      --forest-mid:   #237878;
+      --forest-light: #2E8F8F;
+      --sage:         #7A9E82;
+      --gold:       #BFA06A;
+      --gold-light: #D4B98A;
+      --gold-pale:  #EFE4CC;
+      --cream:      #FAF6F0;
+      --cream-mid:  #F2EBE0;
+      --white:      #FFFFFF;
+      --ink:        #1A1A1A;
+      --ink-soft:   #4A4A4A;
+      --ink-muted:  #7A7A7A;
+      --section-gap: clamp(80px, 10vw, 140px);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       TYPOGRAPHY SYSTEM
+    ============================================================ */
+    .display {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .serif {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+    .label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       CURSOR CUSTOM
+    ============================================================ */
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      opacity: 0.6;
+    }
+
+    /* ============================================================
+       SCROLL PROGRESS BAR
+    ============================================================ */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0;
+      height: 2px; background: var(--gold);
+      z-index: 1001; width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px clamp(24px, 5vw, 80px);
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    nav.scrolled {
+      background: rgba(250, 246, 240, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 16px clamp(24px, 5vw, 80px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      transition: color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .nav-logo span {
+      color: var(--gold);
+      transition: color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    nav.scrolled .nav-logo { color: var(--forest); }
+    nav.scrolled .nav-logo span { color: var(--gold); }
+    nav.scrolled .nav-links a { color: var(--ink-soft); }
+    nav.scrolled .nav-links a:hover { color: var(--forest); }
+    nav.scrolled .nav-legal-link { color: var(--ink-muted) !important; }
+    .nav-links {
+      display: flex; gap: 40px; align-items: center;
+    }
+    .nav-links a {
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.04em;
+      position: relative;
+      transition: color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      background: var(--forest);
+      color: var(--cream) !important;
+      padding: 11px 24px;
+      border-radius: 100px;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      transition: background 0.3s ease, transform 0.2s ease !important;
+    }
+    .nav-cta:hover {
+      background: var(--gold) !important;
+      color: var(--forest) !important;
+      transform: translateY(-1px);
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-divider {
+      width: 1px; height: 16px;
+      background: rgba(0,0,0,0.12);
+      align-self: center;
+    }
+    .nav-legal-link {
+      font-size: 11px !important;
+      color: var(--ink-muted) !important;
+      letter-spacing: 0.04em;
+    }
+    .nav-legal-link:hover { color: var(--forest) !important; }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    }
+    .nav-hamburger span {
+      width: 24px; height: 1.5px;
+      background: var(--forest);
+      transition: all 0.3s ease;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      min-height: 100vh;
+      background: var(--forest);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-pattern {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(191, 160, 106, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(191, 160, 106, 0.08) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .hero-lines {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .hero-lines::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border: 1px solid rgba(191, 160, 106, 0.15);
+      border-radius: 50%;
+      top: -100px; right: -100px;
+      animation: slowRotate 30s linear infinite;
+    }
+    .hero-lines::after {
+      content: '';
+      position: absolute;
+      width: 900px; height: 900px;
+      border: 1px solid rgba(191, 160, 106, 0.08);
+      border-radius: 50%;
+      top: -250px; right: -250px;
+      animation: slowRotate 45s linear infinite reverse;
+    }
+    @keyframes slowRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-content {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 140px clamp(24px, 5vw, 80px) 100px;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin-bottom: 32px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+    }
+    .hero-eyebrow-line {
+      width: 40px; height: 1px; background: var(--gold);
+    }
+    .hero-eyebrow span {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 5.5vw, 80px);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 28px;
+      opacity: 0; transform: translateY(30px);
+      animation: fadeUp 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.35s forwards;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-subline {
+      font-size: clamp(16px, 1.4vw, 19px);
+      line-height: 1.65;
+      color: rgba(255,255,255,0.68);
+      max-width: 480px;
+      margin-bottom: 48px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.65s forwards;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold);
+      color: var(--forest);
+      font-size: 14px; font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 16px 32px;
+      border-radius: 100px;
+      border: none; cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold-light);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(191, 160, 106, 0.35); }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-primary svg { position: relative; z-index: 1; transition: transform 0.3s ease; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 16px 20px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .hero-visual {
+      position: relative; overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+    }
+    .hero-image-wrap {
+      position: absolute; inset: 0;
+    }
+    .hero-image-placeholder {
+      width: 100%; height: 100%;
+      background: var(--forest);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-real-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+    .hero-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(28,61,53,0.55) 0%, rgba(28,61,53,0.1) 60%, transparent 100%);
+      pointer-events: none;
+    }
+    .hero-portrait-frame {
+      position: relative;
+      width: 340px; height: 460px;
+    }
+    .portrait-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(191,160,106,0.2) 0%, rgba(191,160,106,0.05) 100%);
+      border-radius: 200px 200px 0 0;
+      border: 1px solid rgba(191,160,106,0.25);
+    }
+    .portrait-inner {
+      position: absolute;
+      inset: 20px 20px 0 20px;
+      background: linear-gradient(160deg, #2A5445 0%, #1A3530 100%);
+      border-radius: 180px 180px 0 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .portrait-initials {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px; font-weight: 700;
+      color: rgba(191, 160, 106, 0.3);
+      letter-spacing: -0.02em;
+    }
+    .portrait-badge {
+      position: absolute;
+      bottom: 40px; right: -20px;
+      background: var(--gold);
+      color: var(--forest);
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(191,160,106,0.4);
+    }
+    .portrait-badge .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700;
+      line-height: 1; display: block;
+    }
+    .portrait-badge .text {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .hero-scroll-hint {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s forwards;
+    }
+    .hero-scroll-hint span {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.7); }
+    }
+
+    /* ============================================================
+       TRUST BAR
+    ============================================================ */
+    .trust-bar {
+      background: var(--white);
+      padding: 40px clamp(24px, 5vw, 80px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .trust-bar-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      max-width: 900px; margin: 0 auto;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .trust-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--cream-mid);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .trust-icon svg { width: 20px; height: 20px; color: var(--forest); }
+    .trust-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--forest); line-height: 1;
+    }
+    .trust-label {
+      font-size: 12px; color: var(--ink-muted); line-height: 1.4; margin-top: 2px;
+    }
+
+    /* ============================================================
+       SECTION SHARED
+    ============================================================ */
+    section {
+      padding: var(--section-gap) clamp(24px, 5vw, 80px);
+    }
+    .section-header {
+      max-width: 680px; margin: 0 auto 72px;
+      text-align: center;
+    }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-label-line {
+      width: 32px; height: 1px; background: var(--gold);
+    }
+    .section-label span {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .section-title em { font-style: italic; color: var(--forest); }
+    .section-subtitle {
+      font-size: 17px; line-height: 1.7;
+      color: var(--ink-muted);
+    }
+
+    /* ============================================================
+       ANIMATION CLASSES
+    ============================================================ */
+    .fade-up {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+                  transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.9s ease;
+    }
+    .fade-in.visible { opacity: 1; }
+    .stagger-1 { transition-delay: 0.1s !important; }
+    .stagger-2 { transition-delay: 0.2s !important; }
+    .stagger-3 { transition-delay: 0.3s !important; }
+    .stagger-4 { transition-delay: 0.4s !important; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ============================================================
+       PROBLEM SECTION
+    ============================================================ */
+    .problem-section {
+      background: var(--cream);
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 6vw, 96px);
+      align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .problem-visual {
+      position: relative;
+    }
+    .problem-card-stack {
+      position: relative; height: 480px;
+    }
+    .problem-card {
+      position: absolute;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 28px 32px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+      display: flex; align-items: flex-start; gap: 16px;
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .problem-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.1);
+    }
+    .problem-card:nth-child(1) { top: 0; left: 0; right: 80px; }
+    .problem-card:nth-child(2) { top: 130px; left: 60px; right: 20px; }
+    .problem-card:nth-child(3) { top: 260px; left: 20px; right: 60px; }
+    .problem-card:nth-child(4) { top: 360px; left: 80px; right: 0; }
+    .problem-card-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border-radius: 10px; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .problem-card-text { flex: 1; }
+    .problem-card-text strong {
+      display: block; font-size: 14px; font-weight: 600;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .problem-card-text p {
+      font-size: 13px; color: var(--ink-muted); line-height: 1.5;
+    }
+    .problem-accent-dot {
+      position: absolute; width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(191,160,106,0.12) 0%, transparent 70%);
+      border-radius: 50%; bottom: -40px; right: -40px;
+      pointer-events: none;
+    }
+
+    .problem-content { }
+    .problem-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 400; line-height: 1.5;
+      color: var(--ink-soft);
+      margin-bottom: 36px;
+    }
+    .problem-intro em { color: var(--forest); font-style: italic; }
+    .check-list {
+      display: flex; flex-direction: column; gap: 16px;
+      margin-bottom: 48px;
+    }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .check-box {
+      width: 22px; height: 22px; flex-shrink: 0;
+      border-radius: 6px; background: rgba(28,61,53,0.08);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .check-box svg { width: 12px; height: 12px; color: var(--forest); }
+    .check-item p { font-size: 15px; line-height: 1.6; color: var(--ink-soft); }
+
+    /* ============================================================
+       SOLUTION / ABOUT SECTION
+    ============================================================ */
+    .about-section {
+      background: var(--forest);
+      position: relative; overflow: hidden;
+    }
+    .about-section::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(191,160,106,0.1) 0%, transparent 60%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 6vw, 96px);
+      align-items: center;
+      max-width: 1200px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .about-content .section-label span { color: var(--gold); }
+    .about-content .section-title { color: var(--white); }
+    .about-content .section-title em { color: var(--gold-light); }
+    .about-text {
+      font-size: 16px; line-height: 1.8;
+      color: rgba(255,255,255,0.68);
+      margin-bottom: 32px;
+    }
+    .about-quote {
+      border-left: 2px solid var(--gold);
+      padding-left: 24px;
+      margin-bottom: 40px;
+    }
+    .about-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 2vw, 26px);
+      font-weight: 400;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.85);
+      font-style: italic;
+    }
+    .about-quote cite {
+      font-style: normal; font-size: 13px;
+      color: var(--gold); font-weight: 500;
+      letter-spacing: 0.05em; margin-top: 8px;
+      display: block;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-image-frame {
+      position: relative;
+    }
+    .about-image-frame::before {
+      content: '';
+      position: absolute;
+      inset: -16px -16px 16px 16px;
+      border: 1px solid rgba(191,160,106,0.25);
+      border-radius: 24px;
+    }
+    .about-image-box {
+      background: linear-gradient(135deg, #2A5445 0%, #1A3530 100%);
+      border-radius: 20px;
+      height: 500px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .about-image-box::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 50%);
+    }
+    .about-initials-large {
+      font-family: 'Playfair Display', serif;
+      font-size: 100px; font-weight: 700;
+      color: rgba(191,160,106,0.2);
+      letter-spacing: -0.04em;
+      user-select: none;
+    }
+    .about-stats-row {
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .about-stat {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px 24px;
+      flex: 1; min-width: 120px;
+    }
+    .about-stat .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 700;
+      color: var(--gold-light); line-height: 1;
+    }
+    .about-stat .unit {
+      font-size: 18px; vertical-align: super;
+      font-weight: 700; color: var(--gold);
+    }
+    .about-stat .desc {
+      font-size: 12px; color: rgba(255,255,255,0.5);
+      margin-top: 6px; line-height: 1.4;
+    }
+
+    /* ============================================================
+       OFFER / LEAD MAGNET SECTION
+    ============================================================ */
+    .offer-section {
+      background: var(--cream-mid);
+      position: relative; overflow: hidden;
+    }
+    .offer-section::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+    }
+    .offer-card {
+      max-width: 920px; margin: 0 auto;
+      background: var(--white);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.08);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .offer-visual {
+      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 100%);
+      padding: 56px 48px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .offer-visual::before {
+      content: '';
+      position: absolute; bottom: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border: 1px solid rgba(191,160,106,0.2);
+      border-radius: 50%;
+    }
+    .offer-visual::after {
+      content: '';
+      position: absolute; bottom: -120px; right: -120px;
+      width: 360px; height: 360px;
+      border: 1px solid rgba(191,160,106,0.1);
+      border-radius: 50%;
+    }
+    .offer-tag {
+      display: inline-flex;
+      background: rgba(191,160,106,0.2);
+      border: 1px solid rgba(191,160,106,0.3);
+      color: var(--gold-light);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 100px;
+      width: fit-content; margin-bottom: 24px;
+    }
+    .offer-visual-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 700;
+      color: var(--white); line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .offer-visual-title em { font-style: italic; color: var(--gold-light); }
+    .offer-bullets {
+      display: flex; flex-direction: column; gap: 12px;
+      position: relative; z-index: 1;
+    }
+    .offer-bullet {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .offer-bullet-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .offer-bullet span {
+      font-size: 14px; color: rgba(255,255,255,0.75);
+    }
+    .offer-form {
+      padding: 56px 48px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .offer-form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--ink); margin-bottom: 8px;
+    }
+    .offer-form-sub {
+      font-size: 14px; color: var(--ink-muted); margin-bottom: 32px; line-height: 1.6;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; color: var(--ink-soft);
+      margin-bottom: 8px; text-transform: uppercase;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      font-size: 15px; font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
+    }
+    .form-group input:focus {
+      border-color: var(--forest);
+      box-shadow: 0 0 0 3px rgba(28,61,53,0.08);
+    }
+    .form-group input::placeholder { color: var(--ink-muted); }
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--forest);
+      color: var(--white);
+      font-size: 14px; font-weight: 600;
+      letter-spacing: 0.04em;
+      border: none; border-radius: 12px;
+      cursor: pointer; margin-top: 8px;
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative; overflow: hidden;
+    }
+    .form-submit::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--forest-light);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .form-submit:hover::before { transform: translateX(0); }
+    .form-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(28,61,53,0.25); }
+    .form-submit span { position: relative; z-index: 1; }
+    .form-privacy {
+      font-size: 11px; color: var(--ink-muted);
+      text-align: center; margin-top: 16px; line-height: 1.6;
+    }
+    .form-privacy a { color: var(--forest); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+    .form-privacy a:hover { border-color: var(--forest); }
+
+    /* ============================================================
+       TOPICS SECTION
+    ============================================================ */
+    .topics-section {
+      background: var(--white);
+    }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .topic-card {
+      background: var(--cream);
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .topic-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.1);
+      border-color: rgba(191,160,106,0.3);
+    }
+    .topic-card-header {
+      height: 200px;
+      display: flex; align-items: flex-end;
+      padding: 28px;
+      position: relative; overflow: hidden;
+    }
+    .topic-card:nth-child(1) .topic-card-header {
+      background: linear-gradient(135deg, #1C3D35 0%, #2A5445 100%);
+    }
+    .topic-card:nth-child(2) .topic-card-header {
+      background: linear-gradient(135deg, #3D4A2A 0%, #556636 100%);
+    }
+    .topic-card:nth-child(3) .topic-card-header {
+      background: linear-gradient(135deg, #4A2A3D 0%, #663656 100%);
+    }
+    .topic-card-header::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(191,160,106,0.2) 0%, transparent 50%);
+    }
+    .topic-icon {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      position: relative; z-index: 1;
+    }
+    .topic-card-body { padding: 28px; }
+    .topic-category {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .topic-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--ink); line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .topic-desc {
+      font-size: 14px; color: var(--ink-muted);
+      line-height: 1.65; margin-bottom: 20px;
+    }
+    .topic-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600;
+      color: var(--forest);
+      letter-spacing: 0.04em;
+      transition: gap 0.3s ease;
+    }
+    .topic-link:hover { gap: 12px; }
+    .topic-link svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+    .topic-card:hover .topic-link svg { transform: translateX(4px); }
+
+    /* ============================================================
+       HOW IT WORKS
+    ============================================================ */
+    .how-section {
+      background: var(--cream);
+    }
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      max-width: 1000px; margin: 0 auto;
+      position: relative;
+    }
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: calc(16.66% + 20px); right: calc(16.66% + 20px);
+      height: 1px;
+      background: linear-gradient(to right, var(--gold-pale), var(--gold), var(--gold-pale));
+    }
+    .step {
+      text-align: center;
+      padding: 0 32px;
+    }
+    .step-num {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .step:hover .step-num { transform: scale(1.08); }
+    .step:nth-child(1) .step-num {
+      background: var(--forest); color: var(--white);
+      box-shadow: 0 8px 32px rgba(28,61,53,0.25);
+    }
+    .step:nth-child(2) .step-num {
+      background: var(--gold); color: var(--forest);
+      box-shadow: 0 8px 32px rgba(191,160,106,0.35);
+    }
+    .step:nth-child(3) .step-num {
+      background: var(--forest-mid); color: var(--white);
+      box-shadow: 0 8px 32px rgba(42,84,69,0.25);
+    }
+    .step-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--ink); margin-bottom: 12px;
+    }
+    .step-desc {
+      font-size: 14px; color: var(--ink-muted); line-height: 1.7;
+    }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    .testimonials-section {
+      background: var(--forest);
+      position: relative; overflow: hidden;
+    }
+    .testimonials-section .section-title { color: var(--white); }
+    .testimonials-section .section-title em { color: var(--gold-light); }
+    .testimonials-section .section-subtitle { color: rgba(255,255,255,0.55); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .testi-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 36px;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+    }
+    .testi-card:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-6px);
+      border-color: rgba(191,160,106,0.3);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.2);
+    }
+    .testi-stars {
+      display: flex; gap: 4px; margin-bottom: 20px;
+    }
+    .testi-stars span { font-size: 16px; }
+    .testi-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; line-height: 1.65;
+      color: rgba(255,255,255,0.85);
+      font-style: italic; margin-bottom: 28px;
+    }
+    .testi-text::before { content: '"'; }
+    .testi-text::after  { content: '"'; }
+    .testi-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 700;
+      color: var(--forest);
+      flex-shrink: 0;
+    }
+    .testi-name {
+      font-size: 14px; font-weight: 600; color: var(--white);
+    }
+    .testi-role {
+      font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px;
+    }
+    .testi-highlight {
+      grid-column: span 1;
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .testi-highlight .testi-text { color: var(--forest); }
+    .testi-highlight .testi-name { color: var(--forest); }
+    .testi-highlight .testi-role { color: rgba(28,61,53,0.6); }
+    .testi-highlight:hover { background: var(--gold-light); }
+
+    /* ============================================================
+       FINAL CTA
+    ============================================================ */
+    .cta-section {
+      background: var(--cream-mid);
+      text-align: center;
+    }
+    .cta-inner {
+      max-width: 680px; margin: 0 auto;
+    }
+    .cta-inner .section-label { justify-content: center; }
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -0.02em; color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .cta-title em { font-style: italic; color: var(--forest); }
+    .cta-sub {
+      font-size: 17px; color: var(--ink-muted);
+      line-height: 1.7; margin-bottom: 48px;
+    }
+    .cta-actions {
+      display: flex; gap: 16px; align-items: center;
+      justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary-dark {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--forest);
+      color: var(--white);
+      font-size: 14px; font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 18px 40px;
+      border-radius: 100px;
+      border: none; cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary-dark::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--forest-light);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .btn-primary-dark:hover::before { transform: translateX(0); }
+    .btn-primary-dark:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(28,61,53,0.3); }
+    .btn-primary-dark span { position: relative; z-index: 1; }
+    .btn-outline-dark {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--forest);
+      font-size: 14px; font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 18px 32px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(28,61,53,0.3);
+      cursor: pointer; background: transparent;
+      transition: all 0.3s ease;
+    }
+    .btn-outline-dark:hover {
+      background: rgba(28,61,53,0.06);
+      border-color: var(--forest);
+    }
+    .cta-guarantee {
+      margin-top: 32px;
+      display: flex; align-items: center; gap: 10px;
+      justify-content: center;
+    }
+    .cta-guarantee svg { width: 18px; height: 18px; color: var(--forest); }
+    .cta-guarantee span {
+      font-size: 13px; color: var(--ink-muted);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--forest);
+      padding: 72px clamp(24px, 5vw, 80px) 40px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 36px;
+    }
+    .footer-brand { }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline {
+      font-size: 14px; color: rgba(255,255,255,0.5);
+      line-height: 1.6; margin-bottom: 24px;
+    }
+    .footer-social {
+      display: flex; gap: 12px;
+    }
+    .footer-social a {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    .footer-social a:hover {
+      background: var(--gold);
+      color: var(--forest);
+    }
+    .footer-col h4 {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 20px;
+    }
+    .footer-links {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .footer-links a {
+      font-size: 14px; color: rgba(255,255,255,0.6);
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy {
+      font-size: 13px; color: rgba(255,255,255,0.3);
+    }
+    .footer-legal {
+      display: flex; gap: 24px;
+    }
+    .footer-legal a {
+      font-size: 13px; color: rgba(255,255,255,0.3);
+      transition: color 0.2s ease;
+    }
+    .footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ============================================================
+       MOBILE MENU
+    ============================================================ */
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 99;
+      background: var(--forest);
+      display: flex; flex-direction: column;
+      padding: 100px clamp(24px, 5vw, 60px) 60px;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: block;
+      transition: color 0.3s ease, padding-left 0.3s ease;
+    }
+    .mobile-menu a:hover { color: var(--white); padding-left: 12px; }
+    .mobile-menu-cta {
+      margin-top: auto;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .trust-bar-inner { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; min-height: 100svh; }
+      .hero-visual { display: none; }
+      .hero-content { padding: 120px 24px 80px; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .problem-visual { order: -1; }
+      .problem-card-stack { height: 360px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { order: -1; }
+      .about-image-box { height: 320px; }
+      .offer-card { grid-template-columns: 1fr; }
+      .topics-grid { grid-template-columns: 1fr; }
+      .steps-row { grid-template-columns: 1fr; }
+      .steps-row::before { display: none; }
+      .step { padding: 0 0 40px; text-align: left; display: flex; gap: 24px; align-items: flex-start; }
+      .step-num { margin: 0; flex-shrink: 0; width: 56px; height: 56px; font-size: 18px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ============================================================
+       MICRO-INTERACTIONS
+    ============================================================ */
+    .magnetic { transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+
+    /* Smooth counter animation */
+    .count-up { display: inline-block; }
+
+    /* Reveal lines */
+    .reveal-line {
+      overflow: hidden;
+    }
+    .reveal-line span {
+      display: block;
+      transform: translateY(110%);
+      transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .reveal-line.visible span { transform: translateY(0); }
+
+    /* Floating animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-anim { animation: float 6s ease-in-out infinite; }
+
+    /* Shimmer effect on gold elements */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .gold-shimmer {
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 40%, var(--gold) 60%, var(--gold-light) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+
+    /* ============================================================
+       PARTICLES (decorative)
+    ============================================================ */
+    .particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: rgba(191,160,106,0.4);
+      border-radius: 50%;
+      animation: particleFloat linear infinite;
+      pointer-events: none;
+    }
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-20px) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#koerper">Körperkompass</a>
+    <a href="#business">Female Business</a>
+    <a href="#ueber-mich">Über Andrea</a>
+    <a href="#freebie">Energieplan für 0€</a>
+    <div class="mobile-menu-cta">
+      <a href="#freebie" onclick="closeMobileMenu()" style="font-size:16px; background:var(--gold); color:var(--forest); padding:16px 32px; border-radius:100px; border:none; display:inline-block; text-align:center; letter-spacing:0.05em;">
+        Energieplan für 0€ →
+      </a>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="mainNav">
+    <div class="nav-logo">Vital<span>Queens</span></div>
+    <ul class="nav-links">
+      <li><a href="#koerper">Körperkompass</a></li>
+      <li><a href="#business">Female Business</a></li>
+      <li><a href="#ueber-mich">Über Andrea</a></li>
+      <li><a href="#freebie" class="nav-cta">Energieplan für 0€</a></li>
+      <li class="nav-divider"></li>
+      <li><a href="#" class="nav-legal-link">Impressum</a></li>
+      <li><a href="#" class="nav-legal-link">Datenschutz</a></li>
+      <li><a href="#" class="nav-legal-link">AGB</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+      <span id="h1"></span>
+      <span id="h2"></span>
+      <span id="h3"></span>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="top">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span>Vital Mentorin für Frauen 38+</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Mehr Energie.<br>
+        Jeden Tag.<br>
+        <em>Ohne Kompromisse.</em>
+      </h1>
+
+      <p class="hero-subline">
+        Du bist erschöpft, obwohl du eigentlich genug schläfst?
+        Lerne, was deinen Körper wirklich antreibt – und baue
+        nachhaltige Vitalität auf, die mit deinem Leben funktioniert.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#freebie" class="btn-primary">
+          <span>Kostenlosen Energieplan sichern</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#ueber-mich" class="btn-ghost">
+          Wer ist Andrea?
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-image-wrap">
+        <img src="hero image.jpg" alt="Andrea – Vital Mentorin" class="hero-real-img" />
+        <div class="hero-img-overlay"></div>
+        <div class="portrait-badge" style="position:absolute;bottom:60px;left:48px;z-index:3;">
+          <span class="num">100<span style="font-size:18px">+</span></span>
+          <span class="text">Frauen<br>begleitet</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRUST BAR
+  ============================================================ -->
+  <div class="trust-bar fade-up">
+    <div class="trust-bar-inner">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div>
+          <div class="trust-num count-up" data-target="100">0</div>
+          <div class="trust-label">Frauen begleitet</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="trust-num">10</div>
+          <div class="trust-label">Jahre Erfahrung</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="trust-num count-up" data-target="30">0</div>
+          <div class="trust-label">Artikel & Ressourcen</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div>
+          <div class="trust-num" style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--forest)">100%</div>
+          <div class="trust-label">Ohne Med. Jargon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PROBLEM SECTION
+  ============================================================ -->
+  <section class="problem-section" id="koerper">
+    <div class="problem-grid">
+      <div class="problem-visual fade-in">
+        <div class="problem-card-stack">
+          <div class="problem-card stagger-1 fade-up">
+            <div class="problem-card-icon" style="background:#FEF3E8;">💤</div>
+            <div class="problem-card-text">
+              <strong>Müdigkeit trotz Schlaf</strong>
+              <p>8 Stunden geschlafen, trotzdem erschöpft? Deine Zellen brauchen die richtigen Nährstoffe.</p>
+            </div>
+          </div>
+          <div class="problem-card stagger-2 fade-up">
+            <div class="problem-card-icon" style="background:#EEF8F0;">🧠</div>
+            <div class="problem-card-text">
+              <strong>Brain Fog & Konzentration</strong>
+              <p>Gedanken wie durch Watte? Dein Nervensystem sendet klare Signale – lerne sie lesen.</p>
+            </div>
+          </div>
+          <div class="problem-card stagger-3 fade-up">
+            <div class="problem-card-icon" style="background:#F3EEF8;">⚡</div>
+            <div class="problem-card-text">
+              <strong>Hormonschwankungen</strong>
+              <p>Stimmungstiefs, Gewichtsveränderungen, Zyklusprobleme – kein Zufall.</p>
+            </div>
+          </div>
+          <div class="problem-card stagger-4 fade-up">
+            <div class="problem-card-icon" style="background:#FEF3E8;">🌿</div>
+            <div class="problem-card-text">
+              <strong>Darmgesundheit & Business</strong>
+              <p>Dein Darm ist dein zweites Gehirn. Seine Balance entscheidet über dein Energielevel.</p>
+            </div>
+          </div>
+        </div>
+        <div class="problem-accent-dot"></div>
+      </div>
+
+      <div class="problem-content fade-up">
+        <div class="section-label">
+          <div class="section-label-line"></div>
+          <span>Kennst du das?</span>
+        </div>
+        <h2 class="section-title">
+          Du gibst alles –<br><em>aber dein Tank</em><br>ist ständig leer.
+        </h2>
+        <p class="problem-intro">
+          Du schläfst ausreichend, ernährst dich halbwegs vernünftig
+          und trotzdem fühlt sich der Tag an wie ein Dauerlauf auf der Stelle.
+          Das ist <em>nicht normal</em> – und nicht unvermeidlich.
+        </p>
+        <ul class="check-list">
+          <li class="check-item fade-up stagger-1">
+            <div class="check-box">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6l3 3 5-5"/>
+              </svg>
+            </div>
+            <p>Du jonglierst Familie, Job und Business – und opferst dabei deine Energie</p>
+          </li>
+          <li class="check-item fade-up stagger-2">
+            <div class="check-box">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6l3 3 5-5"/>
+              </svg>
+            </div>
+            <p>Du nimmst Nahrungsergänzung, aber weißt nicht ob sie wirklich etwas bringt</p>
+          </li>
+          <li class="check-item fade-up stagger-3">
+            <div class="check-box">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6l3 3 5-5"/>
+              </svg>
+            </div>
+            <p>Du willst keine trockene Medizin – sondern verständliche, praktische Antworten</p>
+          </li>
+        </ul>
+        <a href="#freebie" class="btn-primary" style="background:var(--forest);color:var(--white);">
+          <span>Das will ich ändern</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT / SOLUTION
+  ============================================================ -->
+  <section class="about-section" id="ueber-mich">
+    <div class="about-grid">
+      <div class="about-visual fade-in">
+        <div class="about-image-frame">
+          <div class="about-image-box">
+            <img src="Über Andrea.jpg" alt="Andrea – Vital Mentorin" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;border-radius:20px;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="about-content fade-up">
+        <div class="section-label">
+          <div class="section-label-line"></div>
+          <span>Über Andrea</span>
+        </div>
+        <h2 class="section-title">
+          Ich kenne das Gefühl,<br>
+          <em>mit leerem Tank</em><br>
+          volle Leistung bringen zu wollen.
+        </h2>
+        <p class="about-text">
+          Als Vital-Mentorin, Mutter und Unternehmerin weiß ich,
+          was es heißt, wenn der Körper nicht mehr mitzieht, obwohl der Kopf weitermachen will.
+          Ich habe gelernt, die Signale meines Körpers zu lesen – und dieses Wissen
+          teile ich jetzt mit Frauen wie dir.
+        </p>
+
+        <div class="about-quote">
+          <p>Ich weiß, wie es sich anfühlt, morgens aufzuwachen und zu spüren, dass der Tank nicht voll ist. Genau deshalb habe ich VitalQueens gegründet.</p>
+          <cite>— Andrea, Gründerin VitalQueens</cite>
+        </div>
+
+        <div class="about-stats-row">
+          <div class="about-stat fade-up stagger-1">
+            <div class="num">100<span class="unit">+</span></div>
+            <div class="desc">Frauen begleitet</div>
+          </div>
+          <div class="about-stat fade-up stagger-2">
+            <div class="num">10</div>
+            <div class="desc">Jahre Erfahrung</div>
+          </div>
+          <div class="about-stat fade-up stagger-3">
+            <div class="num">38<span style="font-size:18px;color:var(--gold)">+</span></div>
+            <div class="desc">Zielgruppe Frauen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW IT WORKS
+  ============================================================ -->
+  <section class="how-section">
+    <div class="section-header fade-up">
+      <div class="section-label" style="justify-content:center;">
+        <div class="section-label-line"></div>
+        <span>So funktioniert es</span>
+        <div class="section-label-line"></div>
+      </div>
+      <h2 class="section-title">
+        Dein Weg zu<br><em>dauerhafter Energie</em>
+      </h2>
+      <p class="section-subtitle">
+        Drei einfache Schritte, die deinen Alltag verändern – ohne alles auf den Kopf zu stellen.
+      </p>
+    </div>
+
+    <div class="steps-row">
+      <div class="step fade-up stagger-1">
+        <div class="step-num">01</div>
+        <div>
+          <h3 class="step-title">Körper verstehen</h3>
+          <p class="step-desc">Lerne, was dein Darm, dein Hormonsystem und dein Nervensystem dir sagen – verständlich und ohne medizinischen Jargon.</p>
+        </div>
+      </div>
+      <div class="step fade-up stagger-2">
+        <div class="step-num">02</div>
+        <div>
+          <h3 class="step-title">Routinen aufbauen</h3>
+          <p class="step-desc">Du bekommst konkrete 2-Phasen-Pläne für Morgen, Abend und Stresssituationen – passend zu deinem echten Leben.</p>
+        </div>
+      </div>
+      <div class="step fade-up stagger-3">
+        <div class="step-num">03</div>
+        <div>
+          <h3 class="step-title">Energie erleben</h3>
+          <p class="step-desc">Spür den Unterschied: klarerer Kopf, stabilere Stimmung, mehr Energie – viele Frauen berichten, dass sie sich nach kürzester Zeit spürbar vitaler fühlen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LEAD MAGNET / FREEBIE
+  ============================================================ -->
+  <section class="offer-section" id="freebie">
+    <div class="section-header fade-up">
+      <div class="section-label" style="justify-content:center;">
+        <div class="section-label-line"></div>
+        <span>Für 0€ starten</span>
+        <div class="section-label-line"></div>
+      </div>
+      <h2 class="section-title">
+        Dein <em>2-Phasen Alltagsplan</em><br>für mehr Energie
+      </h2>
+    </div>
+
+    <div class="offer-card fade-up">
+      <div class="offer-visual">
+        <div>
+          <div class="offer-tag">Für 0€ Download</div>
+          <div class="offer-visual-title">
+            <em>Sofort mehr Energie</em> –<br>
+            für Frauen, die alles geben.
+          </div>
+        </div>
+        <div class="offer-bullets">
+          <div class="offer-bullet">
+            <div class="offer-bullet-dot"></div>
+            <span>Die wichtigsten Vitalnährstoffe für deinen Alltag</span>
+          </div>
+          <div class="offer-bullet">
+            <div class="offer-bullet-dot"></div>
+            <span>Energie-Routinen für Phase 1 & 2 deines Zyklus</span>
+          </div>
+          <div class="offer-bullet">
+            <div class="offer-bullet-dot"></div>
+            <span>Stressnotfallprotokoll für besonders harte Tage</span>
+          </div>
+          <div class="offer-bullet">
+            <div class="offer-bullet-dot"></div>
+            <span>Stabilitätsanker, die wirklich in deinen Alltag passen</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="offer-form">
+        <div class="offer-form-title">Für 0€ sichern</div>
+        <div class="offer-form-sub">
+          Trag dich ein und erhalte deinen Energieplan sofort per E-Mail – dein Geschenk von mir.
+        </div>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label>Dein Vorname</label>
+            <input type="text" name="name" placeholder="z.B. Sarah" required />
+          </div>
+          <div class="form-group">
+            <label>Deine E-Mail</label>
+            <input type="email" name="email" placeholder="deine@email.de" required />
+          </div>
+          <button type="submit" class="form-submit">
+            <span>Jetzt Energieplan sichern →</span>
+          </button>
+        </form>
+        <p class="form-privacy">
+          Nur wertvolle Inhalte. Du kannst dich jederzeit abmelden.<br>
+          <a href="#">Datenschutz</a> · <a href="#">Impressum</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TOPICS
+  ============================================================ -->
+  <section class="topics-section" id="business">
+    <div class="section-header fade-up">
+      <div class="section-label" style="justify-content:center;">
+        <div class="section-label-line"></div>
+        <span>Themen & Wissen</span>
+        <div class="section-label-line"></div>
+      </div>
+      <h2 class="section-title">
+        Alles, was du<br>
+        <em>wirklich brauchst</em>
+      </h2>
+      <p class="section-subtitle">
+        Von Zellgesundheit bis Female Business – fundiertes Wissen für Frauen, die Klarheit wollen.
+      </p>
+    </div>
+
+    <div class="topics-grid">
+      <div class="topic-card fade-up stagger-1">
+        <div class="topic-card-header">
+          <div class="topic-icon">🧬</div>
+        </div>
+        <div class="topic-card-body">
+          <div class="topic-category">Körperkompass</div>
+          <h3 class="topic-title">Zellgesundheit & Energie</h3>
+          <p class="topic-desc">Warum du trotz Schlaf müde bist – und was deine Zellen wirklich brauchen, um wieder Energie zu produzieren.</p>
+          <a href="#" class="topic-link">
+            Mehr erfahren
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8h10M8 3l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="topic-card fade-up stagger-2">
+        <div class="topic-card-header">
+          <div class="topic-icon">🌿</div>
+        </div>
+        <div class="topic-card-body">
+          <div class="topic-category">Körperkompass</div>
+          <h3 class="topic-title">Hormone & Darmgesundheit</h3>
+          <p class="topic-desc">Dein Darm und deine Hormone sprechen miteinander. Lerne, was sie sagen – und wie du ihre Balance unterstützt.</p>
+          <a href="#" class="topic-link">
+            Mehr erfahren
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8h10M8 3l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="topic-card fade-up stagger-3">
+        <div class="topic-card-header">
+          <div class="topic-icon">💼</div>
+        </div>
+        <div class="topic-card-body">
+          <div class="topic-category">Female Business</div>
+          <h3 class="topic-title">Business & Körper im Einklang</h3>
+          <p class="topic-desc">Wie du als Mutter und Unternehmerin Karriere machst, ohne deine Gesundheit zu opfern – ganzheitlich gedacht.</p>
+          <a href="#" class="topic-link">
+            Mehr erfahren
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8h10M8 3l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS
+  ============================================================ -->
+  <section class="testimonials-section">
+    <div class="section-header fade-up">
+      <div class="section-label" style="justify-content:center;">
+        <div class="section-label-line" style="background:rgba(191,160,106,0.4)"></div>
+        <span>Stimmen der Community</span>
+        <div class="section-label-line" style="background:rgba(191,160,106,0.4)"></div>
+      </div>
+      <h2 class="section-title" style="color:var(--white)">
+        Das sagen Frauen,<br>
+        <em style="color:var(--gold-light)">die es bereits kennen</em>
+      </h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testi-card fade-up stagger-1">
+        <div class="testi-stars">
+          <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+        </div>
+        <p class="testi-text">
+          Ich hatte 2 Tage nach dem Energieplan meine erste ruhige Woche seit Monaten.
+          Endlich verstehe ich, was mein Körper mir sagen will.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Heike L.</div>
+            <div class="testi-role">Human Resources</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card testi-highlight fade-up stagger-2">
+        <div class="testi-stars">
+          <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+        </div>
+        <p class="testi-text">
+          Körperlich hatte ich schon länger mehrere Herausforderungen. Nach kürzester Zeit hatte ich fühlbar mehr Energie, meine Haut sah frischer aus und meine Verdauung funktionierte wieder gut. Nach drei Wochen war ich wie ausgewechselt.
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--forest);color:var(--gold)">C</div>
+          <div>
+            <div class="testi-name">Cindy G.</div>
+            <div class="testi-role">Unternehmerin, 2 Kinder</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card fade-up stagger-3">
+        <div class="testi-stars">
+          <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+        </div>
+        <p class="testi-text">
+          Ich habe jahrelang gegen meine Erschöpfung, Unverträglichkeiten und Hitzewallungen gekämpft. Jetzt weiß ich endlich warum und was mich dabei unterstützen kann. Danke, Andrea!
+        </p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sabine K.</div>
+            <div class="testi-role">Verwaltung & Mama, 57</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FINAL CTA
+  ============================================================ -->
+  <section class="cta-section">
+    <div class="cta-inner fade-up">
+      <div class="section-label" style="justify-content:center;margin-bottom:20px;">
+        <div class="section-label-line"></div>
+        <span>Dein nächster Schritt</span>
+        <div class="section-label-line"></div>
+      </div>
+      <h2 class="cta-title">
+        Achtsam wirken.<br>
+        <em>Natürlich wachsen.</em>
+      </h2>
+      <p class="cta-sub">
+        Hol dir jetzt deinen 2-Phasen Energieplan als Geschenk und
+        erlebe, was möglich ist, wenn dein Körper wirklich unterstützt wird.
+      </p>
+      <div class="cta-actions">
+        <a href="#freebie" class="btn-primary-dark">
+          <span>Energieplan für 0€ sichern →</span>
+        </a>
+        <a href="#koerper" class="btn-outline-dark">
+          Mehr entdecken
+        </a>
+      </div>
+      <div class="cta-guarantee">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <span>Für dich · Ohne Risiko · Jederzeit abmeldbar</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Vital<span>Queens</span></div>
+        <p class="footer-tagline">
+          Achtsam wirken – Natürlich wachsen.<br>
+          Energie & Vitalität für Frauen 38+.
+        </p>
+        <div class="footer-social">
+          <a href="#" title="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="#" title="Pinterest">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+            </svg>
+          </a>
+          <a href="#" title="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.791-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.266h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="#" title="Newsletter">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Themen</h4>
+        <ul class="footer-links">
+          <li><a href="#koerper">Körperkompass</a></li>
+          <li><a href="#business">Female Business</a></li>
+          <li><a href="#">Mitochondrien</a></li>
+          <li><a href="#">Darmgesundheit</a></li>
+          <li><a href="#">Hormone</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul class="footer-links">
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Waitlist</a></li>
+          <li><a href="#ueber-mich">Über Andrea</a></li>
+          <li><a href="#">Zusammenarbeit</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Für 0€</h4>
+        <ul class="footer-links">
+          <li><a href="#freebie">2-Phasen Energieplan</a></li>
+          <li><a href="#">Ressourcen</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 VitalQueens · Alle Rechte vorbehalten</p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // --- Cursor ---
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.transform = `translate(${ringX - 18}px, ${ringY - 18}px)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, .topic-card, .testi-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.style.transform += ' scale(2.5)';
+        ring.style.transform += ' scale(1.5)';
+        ring.style.opacity = '1';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.opacity = '0.6';
+      });
+    });
+
+    // --- Scroll Progress ---
+    const progress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = (window.scrollY / max * 100) + '%';
+    }, { passive: true });
+
+    // --- Nav Scroll ---
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // --- Mobile Menu ---
+    let menuOpen = false;
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      document.getElementById('mobileMenu').classList.toggle('open', menuOpen);
+      document.getElementById('h1').style.transform = menuOpen ? 'rotate(45deg) translate(5px, 5px)' : '';
+      document.getElementById('h2').style.opacity = menuOpen ? '0' : '1';
+      document.getElementById('h3').style.transform = menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : '';
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    }
+    function closeMobileMenu() {
+      if (menuOpen) toggleMenu();
+    }
+
+    // --- Intersection Observer (fade-up, fade-in) ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fade-up, .fade-in').forEach(el => observer.observe(el));
+
+    // --- Count Up ---
+    function countUp(el, target, duration = 1800) {
+      let start = 0;
+      const step = target / (duration / 16);
+      const timer = setInterval(() => {
+        start += step;
+        if (start >= target) { el.textContent = target + '+'; clearInterval(timer); }
+        else { el.textContent = Math.floor(start) + '+'; }
+      }, 16);
+    }
+
+    const countObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          countUp(el, parseInt(el.dataset.target));
+          countObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+
+    // --- Parallax Hero ---
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.hero-content');
+      if (hero) {
+        const scrolled = window.scrollY;
+        if (scrolled < window.innerHeight) {
+          hero.style.transform = `translateY(${scrolled * 0.2}px)`;
+          hero.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
+        }
+      }
+    }, { passive: true });
+
+    // --- Form Submit ---
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit span');
+      btn.textContent = '✓ Plan wird gesendet…';
+      setTimeout(() => {
+        btn.textContent = '✓ Energieplan unterwegs! Prüfe deine E-Mails.';
+        e.target.querySelector('.form-submit').style.background = 'var(--gold)';
+        e.target.querySelector('.form-submit').style.color = 'var(--forest)';
+      }, 1200);
+    }
+
+    // --- Magnetic buttons ---
+    document.querySelectorAll('.btn-primary, .btn-primary-dark').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) translateY(-2px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    // --- Smooth reveal on load ---
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.4s ease';
+      requestAnimationFrame(() => { document.body.style.opacity = '1'; });
+    });
+  </script>
+</body>
+</html>
