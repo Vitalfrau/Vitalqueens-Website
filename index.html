@@ -136,7 +136,7 @@
     nav.scrolled .nav-links a:hover { color: var(--forest); }
     nav.scrolled .nav-legal-link { color: var(--ink-muted) !important; }
     .nav-links {
-      display: flex; gap: 40px; align-items: center;
+      display: flex; gap: 22px; align-items: center;
     }
     .nav-links a {
       font-size: 13px; font-weight: 500;
@@ -180,6 +180,81 @@
       letter-spacing: 0.04em;
     }
     .nav-legal-link:hover { color: var(--forest) !important; }
+
+    /* ---- Dropdown Blog ---- */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-trigger {
+      display: flex !important;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .nav-dropdown-trigger::after { display: none !important; }
+    .nav-dropdown-arrow {
+      width: 11px; height: 11px;
+      transition: transform 0.22s ease;
+      flex-shrink: 0;
+    }
+    .nav-dropdown:hover .nav-dropdown-arrow { transform: rotate(180deg); }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 16px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 8px 40px rgba(34,52,60,0.13);
+      padding: 10px 0;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+      z-index: 200;
+      border: 1px solid rgba(196,162,85,0.15);
+    }
+    .nav-dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: 50%;
+      width: 11px; height: 11px;
+      background: var(--white);
+      border-top: 1px solid rgba(196,162,85,0.15);
+      border-left: 1px solid rgba(196,162,85,0.15);
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-menu li { list-style: none; }
+    .nav-dropdown-menu a {
+      display: block !important;
+      padding: 10px 22px !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      color: var(--ink-soft) !important;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease !important;
+    }
+    .nav-dropdown-menu a:hover {
+      background: var(--cream-mid);
+      color: var(--forest) !important;
+      padding-left: 26px !important;
+    }
+    .nav-dropdown-menu a::after { display: none !important; }
+
+    /* Mobile Submenu */
+    .mobile-submenu a {
+      font-size: 24px !important;
+      padding: 8px 0 8px 24px !important;
+      color: rgba(255,255,255,0.5) !important;
+      border-bottom: none !important;
+      letter-spacing: 0.01em;
+    }
+    .mobile-submenu a:hover { color: var(--gold) !important; padding-left: 34px !important; }
+
     .nav-hamburger {
       display: none; flex-direction: column; gap: 5px; cursor: pointer;
     }
@@ -1327,13 +1402,20 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#koerper">Körperkompass</a>
-    <a href="#business">Female Business</a>
-    <a href="#ueber-mich">Über Andrea</a>
-    <a href="#freebie">Energieplan für 0€</a>
+    <a href="#top" onclick="closeMobileMenu()">Start</a>
+    <a href="#">Blog</a>
+    <div class="mobile-submenu">
+      <a href="#koerper" onclick="closeMobileMenu()">↳ Körperkompass</a>
+      <a href="#business" onclick="closeMobileMenu()">↳ Female Business</a>
+      <a href="#" onclick="closeMobileMenu()">↳ Persönliches</a>
+    </div>
+    <a href="#" onclick="closeMobileMenu()">Rezepte</a>
+    <a href="#ueber-mich" onclick="closeMobileMenu()">Über mich</a>
+    <a href="#" onclick="closeMobileMenu()">Newsletter</a>
+    <a href="impressum.html" onclick="closeMobileMenu()">Impressum</a>
     <div class="mobile-menu-cta">
-      <a href="#freebie" onclick="closeMobileMenu()" style="font-size:16px; background:var(--gold); color:var(--forest); padding:16px 32px; border-radius:100px; border:none; display:inline-block; text-align:center; letter-spacing:0.05em;">
-        Energieplan für 0€ →
+      <a href="#" onclick="closeMobileMenu()" style="font-size:15px; background:var(--gold); color:var(--forest); padding:16px 28px; border-radius:100px; border:none; display:inline-block; text-align:center; letter-spacing:0.04em; font-weight:600;">
+        Wartelistenplatz sichern →
       </a>
     </div>
   </div>
@@ -1342,10 +1424,24 @@
   <nav id="mainNav">
     <div class="nav-logo">Vital<span>Queens</span></div>
     <ul class="nav-links">
-      <li><a href="#koerper">Körperkompass</a></li>
-      <li><a href="#business">Female Business</a></li>
-      <li><a href="#ueber-mich">Über Andrea</a></li>
-      <li><a href="#freebie" class="nav-cta">Energieplan für 0€</a></li>
+      <li><a href="#top">Start</a></li>
+
+      <li class="nav-dropdown">
+        <a href="#" class="nav-dropdown-trigger">
+          Blog
+          <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <ul class="nav-dropdown-menu">
+          <li><a href="#">Körperkompass</a></li>
+          <li><a href="#">Female Business</a></li>
+          <li><a href="#">Persönliches</a></li>
+        </ul>
+      </li>
+
+      <li><a href="#">Rezepte</a></li>
+      <li><a href="#ueber-mich">Über mich</a></li>
+      <li><a href="#" class="nav-cta">Wartelistenplatz sichern</a></li>
+      <li><a href="#">Newsletter</a></li>
       <li class="nav-divider"></li>
       <li><a href="impressum.html" class="nav-legal-link">Impressum</a></li>
     </ul>
