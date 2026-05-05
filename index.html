@@ -2222,15 +2222,46 @@
     }, { passive: true });
 
     // --- Form Submit ---
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.form-submit span');
-      btn.textContent = '✓ Plan wird gesendet…';
-      setTimeout(() => {
-        btn.textContent = '✓ Energieplan unterwegs! Prüfe deine E-Mails.';
-        e.target.querySelector('.form-submit').style.background = 'var(--gold)';
-        e.target.querySelector('.form-submit').style.color = 'var(--forest)';
-      }, 1200);
+      const form = e.target;
+      const btn = form.querySelector('.form-submit');
+      const btnSpan = btn.querySelector('span');
+
+      btnSpan.textContent = 'Wird gesendet…';
+      btn.disabled = true;
+
+      const data = {
+        access_key: 'nf_8yolf62l9bkudwgbl4ov13lce10mp59r',
+        name: form.querySelector('[name="name"]').value,
+        email: form.querySelector('[name="email"]').value
+      };
+
+      try {
+        const res = await fetch('https://api.nforms.eu/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          btnSpan.textContent = '✓ Energieplan unterwegs! Prüfe deine E-Mails.';
+          btn.style.background = 'var(--gold)';
+          btn.style.color = 'var(--forest)';
+          form.reset();
+        } else {
+          throw new Error('Serverfehler');
+        }
+      } catch {
+        btnSpan.textContent = 'Fehler – bitte erneut versuchen.';
+        btn.style.background = '#c0392b';
+        btn.disabled = false;
+        setTimeout(() => {
+          btnSpan.textContent = 'Jetzt Energieplan sichern →';
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 3000);
+      }
     }
 
     // --- Magnetic buttons ---
