@@ -1,0 +1,265 @@
+import os
+
+BASE = r'C:\Users\Andrea\Desktop\Claude Ordner\Vitalqueens'
+
+NAV = '''<nav id="mainNav">
+  <a href="/index.html" class="nav-logo">Vital<span>Queens</span></a>
+  <ul class="nav-links">
+    <li><a href="/index.html">Start</a></li>
+    <li class="nav-dropdown">
+      <a href="/blog.html" class="nav-dropdown-trigger">Blog
+        <svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/koerperkompass.html">Körperkompass</a></li>
+        <li><a href="/female-business.html">Female Business</a></li>
+        <li><a href="/persoenliches.html">Persönliches</a></li>
+      </ul>
+    </li>
+    <li><a href="/rezepte.html">Rezepte</a></li>
+    <li><a href="/index.html#ueber-mich">Über mich</a></li>
+    <li><a href="/warteliste.html" class="nav-cta">Wartelistenplatz sichern</a></li>
+    <li><a href="/newsletter.html">Newsletter</a></li>
+    <li class="nav-divider"></li>
+    <li><a href="/impressum.html" class="nav-legal-link">Impressum</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>'''
+
+FOOTER = '''<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Vital<span>Queens</span></div>
+      <p class="footer-tagline">Achtsam wirken – Natürlich wachsen.<br>Energie &amp; Vitalität für Frauen 38+.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Themen</h4>
+      <ul class="footer-links">
+        <li><a href="/koerperkompass.html">Körperkompass</a></li>
+        <li><a href="/female-business.html">Female Business</a></li>
+        <li><a href="/persoenliches.html">Persönliches</a></li>
+        <li><a href="/rezepte.html">Rezepte</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Community</h4>
+      <ul class="footer-links">
+        <li><a href="/newsletter.html">Newsletter</a></li>
+        <li><a href="/warteliste.html">Warteliste</a></li>
+        <li><a href="/index.html#ueber-mich">Über Andrea</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Für 0€</h4>
+      <ul class="footer-links">
+        <li><a href="/index.html#freebie">Energieplan</a></li>
+        <li><a href="/newsletter.html">Newsletter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 VitalQueens · Alle Rechte vorbehalten</p>
+    <div class="footer-legal">
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>'''
+
+STYLE = '''
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --forest: #3D8E9E; --forest-mid: #4EA8B8;
+      --gold: #C4A255; --gold-light: #D9BB78; --gold-pale: #F0E3C4;
+      --cream: #F7F5F1; --cream-mid: #EBF2F0; --white: #FFFFFF;
+      --ink: #22343C; --ink-soft: #446070; --ink-muted: #7298A6;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px clamp(24px,5vw,80px); display: flex; align-items: center; justify-content: space-between; background: rgba(247,245,241,0.97); backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--forest); }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 22px; align-items: center; list-style: none; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0.04em; transition: color 0.3s; position: relative; }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { background: var(--forest); color: var(--cream) !important; padding: 10px 22px; border-radius: 100px; font-size: 13px !important; transition: background 0.3s !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--forest) !important; }
+    .nav-divider { width: 1px; height: 16px; background: rgba(0,0,0,0.1); align-self: center; }
+    .nav-legal-link { font-size: 11px !important; color: var(--ink-muted) !important; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-trigger { display: flex !important; align-items: center; gap: 4px; cursor: pointer; }
+    .nav-dropdown-trigger::after { display: none !important; }
+    .nav-dropdown-arrow { width: 11px; height: 11px; transition: transform 0.22s ease; }
+    .nav-dropdown:hover .nav-dropdown-arrow { transform: rotate(180deg); }
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(-6px); background: var(--white); border-radius: 14px; box-shadow: 0 8px 40px rgba(34,52,60,0.13); padding: 10px 0; min-width: 200px; opacity: 0; visibility: hidden; transition: opacity 0.22s, transform 0.22s, visibility 0.22s; z-index: 200; border: 1px solid rgba(196,162,85,0.15); }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown-menu li { list-style: none; }
+    .nav-dropdown-menu a { display: block !important; padding: 10px 22px !important; font-size: 13px !important; color: var(--ink-soft) !important; white-space: nowrap; transition: background 0.15s, color 0.15s !important; }
+    .nav-dropdown-menu a::after { display: none !important; }
+    .nav-dropdown-menu a:hover { background: var(--cream-mid); color: var(--forest) !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-hamburger span { width: 24px; height: 1.5px; background: var(--forest); transition: all 0.3s; }
+    .page-hero { padding: 140px clamp(24px,5vw,80px) 80px; position: relative; overflow: hidden; text-align: center; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 50%, rgba(196,162,85,0.15) 0%, transparent 60%); }
+    .page-hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 16px; position: relative; }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px,5vw,64px); font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 20px; position: relative; }
+    .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto; line-height: 1.7; position: relative; }
+    .page-content { max-width: 1100px; margin: 0 auto; padding: clamp(60px,8vw,100px) clamp(24px,5vw,40px); }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+    .section-heading { font-family: 'Playfair Display', serif; font-size: clamp(26px,3.5vw,40px); font-weight: 700; color: var(--ink); margin-bottom: 48px; }
+    .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .post-card { background: var(--white); border-radius: 20px; overflow: hidden; border: 1px solid rgba(34,52,60,0.06); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+    .post-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(34,52,60,0.1); }
+    .post-body { padding: 28px 28px 32px; flex: 1; display: flex; flex-direction: column; }
+    .post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .post-cat { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+    .post-cat.cat-k { background: rgba(61,142,158,0.1); color: var(--forest); }
+    .post-cat.cat-b { background: rgba(26,74,66,0.1); color: #267060; }
+    .post-cat.cat-p { background: rgba(90,68,130,0.12); color: #5A4482; }
+    .post-cat.cat-r { background: rgba(196,162,85,0.15); color: var(--gold); }
+    .post-date { font-size: 12px; color: var(--ink-muted); }
+    .post-body h3 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--ink); margin-bottom: 12px; line-height: 1.35; flex: 1; }
+    .post-read { font-size: 13px; font-weight: 600; color: var(--forest); display: inline-flex; align-items: center; gap: 4px; transition: gap 0.2s; margin-top: 16px; }
+    .post-card:hover .post-read { gap: 8px; }
+    footer { background: var(--forest); color: var(--white); padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px) 0; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .footer-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+    .footer-links { list-style: none; }
+    .footer-links a { display: block; padding: 5px 0; font-size: 14px; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 13px; color: rgba(255,255,255,0.3); transition: color 0.2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,0.7); }
+    .nav-mobile-open .nav-links { display: flex !important; flex-direction: column; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--cream); z-index: 99; justify-content: center; align-items: center; gap: 32px; }
+    @media (max-width: 900px) { .posts-grid { grid-template-columns: 1fr 1fr; } .footer-top { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .nav-links { display: none; } .nav-hamburger { display: flex; } .posts-grid { grid-template-columns: 1fr; } .footer-top { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; text-align: center; } }
+'''
+
+CATEGORIES = [
+    {
+        'file': 'koerperkompass.html',
+        'hero_bg': 'var(--forest)',
+        'label': 'Gesundheit & Energie',
+        'title': 'Körper<em>kompass</em>',
+        'desc': 'Mitochondrien, Hormone, Darm & natürliche Energie – versteh deinen Körper und gewinne deine Vitalität zurück.',
+        'cat_class': 'cat-k',
+        'cat_label': 'Körperkompass',
+        'articles': [
+            ('29. April 2026', 'Erschöpft bis in die Zellen. Was Mitochondrien mit deiner täglichen Müdigkeit zu tun haben', '/koerperkompass/erschoepft-bis-in-die-zellen-was-mitochondrien-mit-deiner-taeglichen-muedigkeit-zu-tun-haben.html'),
+            ('17. April 2026', 'Darmgesundheit. Wenn du innerlich nichts mehr verdauen kannst', '/koerperkompass/darmgesundheit-wenn-du-innerlich-nichts-mehr-verdauen-kannst.html'),
+            ('17. März 2026', 'Früher doof, heute super: Warum ich Nahrungsergänzungsmittel heute mit anderen Augen sehe', '/koerperkompass/frueher-doof-heute-super-warum-ich-nahrungsergaenzungsmittel-heute-mit-anderen-augen-sehe.html'),
+            ('5. März 2026', 'Du schläfst 8 Stunden und bist trotzdem müde?', '/koerperkompass/du-schlaefst-8-stunden-und-bist-trotzdem-muede.html'),
+            ('6. März 2026', 'Hormongleichgewicht bei Frauen: Essenzielle Bedürfnisse des Körpers', '/koerperkompass/hormongleichgewicht-bei-frauen.html'),
+            ('28. März 2026', 'Warum dein Nervensystem dauerhaft unter Strom steht', '/koerperkompass/warum-dein-nervensystem-dauerhaft-unter-strom-steht-und-was-haendigkeit-damit-zu-tun-hat.html'),
+        ]
+    },
+    {
+        'file': 'female-business.html',
+        'hero_bg': 'linear-gradient(135deg, #1A4A42, #267060)',
+        'label': 'Business & Wachstum',
+        'title': 'Female <em>Business</em>',
+        'desc': 'Sichtbarkeit, Positionierung & nachhaltiger Erfolg – Business mit Körper und Leben in Einklang bringen.',
+        'cat_class': 'cat-b',
+        'cat_label': 'Female Business',
+        'articles': [
+            ('16. April 2026', 'Erschöpft im Business? Dein Darm weiß die Antwort', '/female-business/erschoepft-im-business-dein-darm-weiss-die-antwort.html'),
+            ('19. März 2026', '4 Wege, wie wir 2026 zusammenarbeiten können', '/female-business/4-wege-wie-wir-2026-zusammenarbeiten-koennen.html'),
+            ('19. März 2026', 'Passt das ganzheitliche Konzept zu mir?', '/female-business/passt-das-ganzheitliche-konzept-zu-mir.html'),
+            ('18. März 2026', '7 Gründe, warum ich Netzwerken und echte Begegnung liebe', '/female-business/7-gruende-warum-ich-netzwerken-und-echte-begegnung-liebe.html'),
+            ('29. Januar 2026', 'Gehen wir in Resonanz?', '/female-business/gehen-wir-in-resonanz%f0%9f%92%83%f0%9f%91%91%f0%9f%92%8e.html'),
+        ]
+    },
+    {
+        'file': 'persoenliches.html',
+        'hero_bg': 'linear-gradient(135deg, #3A2E58, #5A4482)',
+        'label': 'Aus meinem Leben',
+        'title': 'Persön<em>liches</em>',
+        'desc': 'Aus meinem Leben, meinen Erfahrungen & meiner Reise – ehrlich, persönlich und nah.',
+        'cat_class': 'cat-p',
+        'cat_label': 'Persönliches',
+        'articles': [
+            ('16. April 2026', 'Spät-Mutter und Wiedereinstieg ins Berufsleben', '/persoenlich/spaet-mutter-und-wiedereinstieg-ins-berufsleben.html'),
+            ('9. März 2026', 'Ostern ohne Stress – 7 schnelle Überraschungen für Kinder', '/persoenlich/ostern-ohne-stress-7-schnelle-ueberraschungen-fuer-kinder-wenn-du-null-energie-hast.html'),
+            ('19. Januar 2026', 'Mein Motto für 2026: Freude am Leben', '/persoenlich/mein-motto-fuer-2026-heisst-freude-am-leben.html'),
+            ('21. Januar 2026', 'Meine To-Want-Liste für das 1. Quartal 2026', '/persoenlich/meine-to-want-liste-fuer-das-1-quartal-2026.html'),
+            ('17. Januar 2026', 'Jahresrückblick 2025: Vom Funktionieren ins bewusste Gestalten', '/persoenlich/jahresrueckblick-2025.html'),
+        ]
+    },
+]
+
+def make_cards(articles, cat_class, cat_label):
+    cards = ''
+    for date, title, url in articles:
+        cards += f'''
+    <a href="{url}" class="post-card">
+      <div class="post-body">
+        <div class="post-meta">
+          <span class="post-cat {cat_class}">{cat_label}</span>
+          <span class="post-date">{date}</span>
+        </div>
+        <h3>{title}</h3>
+        <span class="post-read">Weiterlesen →</span>
+      </div>
+    </a>'''
+    return cards
+
+for cat in CATEGORIES:
+    cards = make_cards(cat['articles'], cat['cat_class'], cat['cat_label'])
+    html = f'''<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{cat["cat_label"]} – VitalQueens Blog</title>
+  <meta name="description" content="{cat["desc"]}">
+  <link rel="canonical" href="https://www.vitalqueens.de/{cat["file"]}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <style>{STYLE}</style>
+</head>
+<body>
+{NAV}
+
+<section class="page-hero" style="background: {cat["hero_bg"]};">
+  <p class="page-hero-label">{cat["label"]}</p>
+  <h1>{cat["title"]}</h1>
+  <p>{cat["desc"]}</p>
+</section>
+
+<main class="page-content">
+  <span class="section-label">Neueste Beiträge</span>
+  <h2 class="section-heading">Aktuelle Artikel</h2>
+  <div class="posts-grid">
+    {cards}
+  </div>
+</main>
+
+{FOOTER}
+
+<script>
+function toggleMenu() {{ document.body.classList.toggle('nav-mobile-open'); }}
+</script>
+</body>
+</html>'''
+
+    path = os.path.join(BASE, cat['file'])
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    print(f'Created: {cat["file"]}')
+
+print('Done!')
