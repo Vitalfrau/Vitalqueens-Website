@@ -2231,5 +2231,92 @@
     });
   </script>
   <script async src="https://app.getresponse.com/static/plugins/webform-plugin/webform.js"></script>
+
+  <!-- POPUP -->
+  <style>
+    .vq-popup-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(34,52,60,0.55);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    .vq-popup-overlay.active { opacity: 1; visibility: visible; }
+    .vq-popup {
+      background: var(--cream);
+      border-radius: 24px;
+      padding: clamp(32px,5vw,52px);
+      max-width: 480px; width: 100%;
+      position: relative;
+      transform: translateY(24px);
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      box-shadow: 0 32px 80px rgba(34,52,60,0.25);
+    }
+    .vq-popup-overlay.active .vq-popup { transform: translateY(0); }
+    .vq-popup-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      background: rgba(34,52,60,0.07);
+      border: none; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .vq-popup-close:hover { background: rgba(34,52,60,0.15); }
+    .vq-popup-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .vq-popup-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px,3vw,30px); font-weight: 700;
+      color: var(--ink); line-height: 1.2; margin-bottom: 10px;
+    }
+    .vq-popup-sub {
+      font-size: 15px; color: var(--ink-muted);
+      line-height: 1.6; margin-bottom: 24px;
+    }
+    .vq-popup-gift {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--gold-pale); border-radius: 12px;
+      padding: 12px 16px; margin-bottom: 24px;
+      font-size: 13px; color: var(--ink-soft); font-weight: 500;
+    }
+  </style>
+
+  <div class="vq-popup-overlay" id="vqPopup" role="dialog" aria-modal="true">
+    <div class="vq-popup">
+      <button class="vq-popup-close" onclick="closePopup()" aria-label="Schließen">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <p class="vq-popup-tag">Kostenlos für dich</p>
+      <h2 class="vq-popup-title">Hol dir deinen gratis Energieplan</h2>
+      <p class="vq-popup-sub">Schluss mit der Erschöpfung. Trag dich ein und erhalte deinen persönlichen Energieplan sofort per E-Mail.</p>
+      <div class="vq-popup-gift">
+        <span>🎁</span>
+        <span>PDF-Download · Sofort in deinem Postfach · 100% kostenlos</span>
+      </div>
+      <getresponse-form form-id="ef9fcc86-59ec-45d0-b999-c312c4c6ca1a" e="0"></getresponse-form>
+    </div>
+  </div>
+
+  <script>
+    function closePopup() {
+      document.getElementById('vqPopup').classList.remove('active');
+      sessionStorage.setItem('vqPopupSeen', '1');
+    }
+    document.getElementById('vqPopup').addEventListener('click', function(e) {
+      if (e.target === this) closePopup();
+    });
+    if (!sessionStorage.getItem('vqPopupSeen')) {
+      setTimeout(() => {
+        document.getElementById('vqPopup').classList.add('active');
+      }, 1000);
+    }
+  </script>
 </body>
 </html>
