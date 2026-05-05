@@ -1835,19 +1835,7 @@
         <div class="offer-form-sub">
           Trag dich ein und erhalte deinen Energieplan sofort per E-Mail – dein Geschenk von mir.
         </div>
-        <form onsubmit="handleSubmit(event)">
-          <div class="form-group">
-            <label>Dein Vorname</label>
-            <input type="text" name="name" placeholder="z.B. Sarah" required />
-          </div>
-          <div class="form-group">
-            <label>Deine E-Mail</label>
-            <input type="email" name="email" placeholder="deine@email.de" required />
-          </div>
-          <button type="submit" class="form-submit">
-            <span>Jetzt Energieplan sichern →</span>
-          </button>
-        </form>
+        <getresponse-form form-id="baa61abe-6fda-4006-910a-e45ca3c43255" e="0"></getresponse-form>
         <p class="form-privacy">
           Nur wertvolle Inhalte. Du kannst dich jederzeit abmelden.<br>
           <a href="#">Datenschutz</a> · <a href="#">Impressum</a>
@@ -2221,48 +2209,6 @@
       }
     }, { passive: true });
 
-    // --- Form Submit ---
-    async function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const btn = form.querySelector('.form-submit');
-      const btnSpan = btn.querySelector('span');
-
-      btnSpan.textContent = 'Wird gesendet…';
-      btn.disabled = true;
-
-      const data = {
-        access_key: 'nf_8yolf62l9bkudwgbl4ov13lce10mp59r',
-        name: form.querySelector('[name="name"]').value,
-        email: form.querySelector('[name="email"]').value
-      };
-
-      try {
-        const res = await fetch('https://api.nforms.eu/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        if (res.ok) {
-          btnSpan.textContent = '✓ Energieplan unterwegs! Prüfe deine E-Mails.';
-          btn.style.background = 'var(--gold)';
-          btn.style.color = 'var(--forest)';
-          form.reset();
-        } else {
-          throw new Error('Serverfehler');
-        }
-      } catch {
-        btnSpan.textContent = 'Fehler – bitte erneut versuchen.';
-        btn.style.background = '#c0392b';
-        btn.disabled = false;
-        setTimeout(() => {
-          btnSpan.textContent = 'Jetzt Energieplan sichern →';
-          btn.style.background = '';
-          btn.style.color = '';
-        }, 3000);
-      }
-    }
 
     // --- Magnetic buttons ---
     document.querySelectorAll('.btn-primary, .btn-primary-dark').forEach(btn => {
@@ -2284,5 +2230,6 @@
       requestAnimationFrame(() => { document.body.style.opacity = '1'; });
     });
   </script>
+  <script async src="https://app.getresponse.com/static/plugins/webform-plugin/webform.js"></script>
 </body>
 </html>
