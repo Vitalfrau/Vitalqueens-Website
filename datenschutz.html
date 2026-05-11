@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,7 +25,7 @@
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito Sans', sans-serif;
       background-color: var(--cream);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -43,11 +43,11 @@
       box-shadow: 0 1px 0 rgba(0,0,0,0.06);
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif;
+      font-family: 'EB Garamond', serif;
       font-size: 22px; font-weight: 700;
       color: var(--forest);
     }
-    .nav-logo span { color: var(--gold); }
+    .nav-logo span { color: #bac8ab; }
     .nav-back {
       font-size: 13px; font-weight: 500;
       color: var(--ink-muted);
@@ -69,7 +69,7 @@
       margin-bottom: 16px;
     }
     .legal-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'EB Garamond', serif;
       font-size: clamp(36px, 5vw, 56px);
       font-weight: 700; line-height: 1.1;
       color: var(--forest);
@@ -79,7 +79,7 @@
     }
     .legal-section { margin-bottom: 40px; }
     .legal-section h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'EB Garamond', serif;
       font-size: 20px; font-weight: 700;
       color: var(--forest);
       margin-bottom: 12px;
@@ -146,17 +146,17 @@
       flex-wrap: wrap; gap: 16px;
     }
     .footer-logo {
-      font-family: 'Playfair Display', serif;
+      font-family: 'EB Garamond', serif;
       font-size: 18px; font-weight: 700;
       color: var(--white);
     }
-    .footer-logo span { color: var(--gold); }
+    .footer-logo span { color: #bac8ab; }
     .footer-legal { display: flex; gap: 24px; }
     .footer-legal a {
       font-size: 13px; color: rgba(255,255,255,0.3);
       transition: color 0.2s;
     }
-    .footer-legal a:hover { color: rgba(255,255,255,0.7); }
+    .footer-legal a:hover { color: var(--ink-soft); }
     .footer-legal a[aria-current="page"] { color: var(--gold-light); }
 
     @media (max-width: 600px) {
@@ -273,5 +273,5 @@
     </div>
   </footer>
 
-</body>
+<script>document.querySelectorAll('img').forEach(function(img){img.onerror=function(){var f=this.closest('figure')||this;f.style.display='none';};});</script></body>
 </html>

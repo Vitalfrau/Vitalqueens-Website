@@ -4,7 +4,7 @@
     {
       "name": "vitalqueens",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3456", "."],
+      "runtimeArgs": ["serve", "-l", "3456", "C:\\Users\\victo\\OneDrive\\Desktop\\Claude_Andrea\\Vitalqueens-Website"],
       "port": 3456
     }
   ]
